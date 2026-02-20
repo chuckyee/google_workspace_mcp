@@ -86,27 +86,46 @@ BASE_SCOPES = [USERINFO_EMAIL_SCOPE, USERINFO_PROFILE_SCOPE, OPENID_SCOPE]
 # Service-specific scope groups
 DOCS_SCOPES = [
     DOCS_READONLY_SCOPE,
-    DOCS_WRITE_SCOPE,
+    # DOCS_WRITE_SCOPE removed — exfiltration risk: can write to attacker-shared docs
+    # drive.file used instead: limits writes to app-created docs only
     DRIVE_READONLY_SCOPE,
     DRIVE_FILE_SCOPE,
 ]
 
-CALENDAR_SCOPES = [CALENDAR_SCOPE, CALENDAR_READONLY_SCOPE, CALENDAR_EVENTS_SCOPE]
+CALENDAR_SCOPES = [
+    # CALENDAR_SCOPE removed — exfiltration risk: can invite external attendees
+    CALENDAR_READONLY_SCOPE,
+    # CALENDAR_EVENTS_SCOPE removed — exfiltration risk: can invite external attendees
+]
 
-DRIVE_SCOPES = [DRIVE_SCOPE, DRIVE_READONLY_SCOPE, DRIVE_FILE_SCOPE]
+DRIVE_SCOPES = [
+    # DRIVE_SCOPE removed — exfiltration risk: can share any file externally
+    DRIVE_READONLY_SCOPE,
+    DRIVE_FILE_SCOPE,
+]
 
 GMAIL_SCOPES = [
     GMAIL_READONLY_SCOPE,
-    GMAIL_SEND_SCOPE,
+    # GMAIL_SEND_SCOPE removed — exfiltration risk: can email data to any address
     GMAIL_COMPOSE_SCOPE,
     GMAIL_MODIFY_SCOPE,
     GMAIL_LABELS_SCOPE,
-    GMAIL_SETTINGS_BASIC_SCOPE,
+    # GMAIL_SETTINGS_BASIC_SCOPE removed — exfiltration risk: can create forwarding filters
 ]
 
-CHAT_SCOPES = [CHAT_READONLY_SCOPE, CHAT_WRITE_SCOPE, CHAT_SPACES_SCOPE]
+CHAT_SCOPES = [
+    CHAT_READONLY_SCOPE,
+    # CHAT_WRITE_SCOPE removed — exfiltration risk: can send messages
+    # CHAT_SPACES_SCOPE removed — exfiltration risk: can create spaces with external users
+]
 
-SHEETS_SCOPES = [SHEETS_READONLY_SCOPE, SHEETS_WRITE_SCOPE, DRIVE_READONLY_SCOPE]
+SHEETS_SCOPES = [
+    SHEETS_READONLY_SCOPE,
+    # SHEETS_WRITE_SCOPE removed — exfiltration risk: can write to attacker-shared sheets
+    # drive.file used instead: limits writes to app-created sheets only
+    DRIVE_READONLY_SCOPE,
+    DRIVE_FILE_SCOPE,
+]
 
 FORMS_SCOPES = [
     FORMS_BODY_SCOPE,
@@ -114,7 +133,12 @@ FORMS_SCOPES = [
     FORMS_RESPONSES_READONLY_SCOPE,
 ]
 
-SLIDES_SCOPES = [SLIDES_SCOPE, SLIDES_READONLY_SCOPE]
+SLIDES_SCOPES = [
+    # SLIDES_SCOPE removed — exfiltration risk: can write to attacker-shared presentations
+    # drive.file used instead: limits writes to app-created presentations only
+    SLIDES_READONLY_SCOPE,
+    DRIVE_FILE_SCOPE,
+]
 
 TASKS_SCOPES = [TASKS_SCOPE, TASKS_READONLY_SCOPE]
 
@@ -123,9 +147,9 @@ CONTACTS_SCOPES = [CONTACTS_SCOPE, CONTACTS_READONLY_SCOPE]
 CUSTOM_SEARCH_SCOPES = [CUSTOM_SEARCH_SCOPE]
 
 SCRIPT_SCOPES = [
-    SCRIPT_PROJECTS_SCOPE,
+    # SCRIPT_PROJECTS_SCOPE removed — exfiltration risk: can create scripts with arbitrary code
     SCRIPT_PROJECTS_READONLY_SCOPE,
-    SCRIPT_DEPLOYMENTS_SCOPE,
+    # SCRIPT_DEPLOYMENTS_SCOPE removed — exfiltration risk: can deploy auto-running scripts
     SCRIPT_DEPLOYMENTS_READONLY_SCOPE,
     SCRIPT_PROCESSES_READONLY_SCOPE,  # Required for list_script_processes
     SCRIPT_METRICS_SCOPE,  # Required for get_script_metrics
